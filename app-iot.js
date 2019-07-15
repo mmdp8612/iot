@@ -2,7 +2,7 @@ var mqtt = require('mqtt');
 var mysql = require('mysql');
 var express = require('express');
 var Topic = 'test';
-var Broker_URL = 'tcp://66.97.37.14';
+var Broker_URL = 'tcp://66.97.40.26';
 var Database_URL = 'localhost';
 
 var app = express();
@@ -19,8 +19,8 @@ var connection = mysql.createConnection({
 	
 	host: Database_URL,
 	user: 'root',
-	password: 'Gh4mJyP2',
-	database: 'silicsmq_iot_admin'
+	password: 'silicsiot',
+	database: 'iot'
 
 });
 
