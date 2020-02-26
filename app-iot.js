@@ -1,4 +1,4 @@
-var mqtt = require('mqtt');
+/*var mqtt = require('mqtt');
 var mysql = require('mysql');
 var express = require('express');
 var Topic = 'test';
@@ -107,11 +107,7 @@ function insert_message(topic, message, packet){
 	
 	var id_usuario = 15;
 	
-	/*if(t.length!=0){
-			
-		id_usuario = t[0];	
-			
-	}*/
+	
 	
 	var out = message.toString().replace(/-/gi, ">>").split("|");
 	
@@ -184,10 +180,10 @@ app.get('/publicar', function(req, res) {
 	res.send("Registro enviado...");
   
 });
-
+*/
 
 app.listen(8000, function(){
 	
-	
+	console.log("Conectado al puerto 8000...");
 	
 });
