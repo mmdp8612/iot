@@ -2,7 +2,7 @@ var mqtt = require('mqtt');
 var mysql = require('mysql');
 var express = require('express');
 var Topic = 'test';
-var Broker_URL = 'tcp://66.97.40.26';
+var Broker_URL = 'tcp://66.97.36.17';
 var Database_URL = 'localhost';
 
 var app = express();
