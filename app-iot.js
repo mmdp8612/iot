@@ -1,4 +1,4 @@
-/*var mqtt = require('mqtt');
+var mqtt = require('mqtt');
 var mysql = require('mysql');
 var express = require('express');
 var Topic = 'test';
@@ -19,8 +19,8 @@ var connection = mysql.createConnection({
 	
 	host: Database_URL,
 	user: 'root',
-	password: '',
 	database: 'iot',
+	port: 3306,
 	insecureAuth : true
 
 });
@@ -180,7 +180,6 @@ app.get('/publicar', function(req, res) {
 	res.send("Registro enviado...");
   
 });
-*/
 
 app.listen(8000, function(){
 	
