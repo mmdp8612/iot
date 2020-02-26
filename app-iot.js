@@ -20,7 +20,8 @@ var connection = mysql.createConnection({
 	host: Database_URL,
 	user: 'root',
 	password: '',
-	database: 'iot'
+	database: 'iot',
+	insecureAuth : true
 
 });
 
