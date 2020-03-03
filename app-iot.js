@@ -10,8 +10,8 @@ var app = express();
 var options = {
 	clientId: 'MyQTT',
 	port: 1883,
-	username: 'silics',
-	password: 'Barty88',
+	username: 'points',
+	password: 'Fm7G7MtV',
 	keepalive: 60
 };        
 
