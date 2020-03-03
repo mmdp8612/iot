@@ -90,7 +90,15 @@ function insert_message(topic, message, packet){
 	
 	const objMessage = JSON.parse(String(message));
 	
-	objMessage.topic = topic;
+	const topic = String(topic).split("|");
+	
+	objMessage.topic = {
+		cmd: topic[0],
+		proveedor: topic[1],
+		cliente: topic[2],
+		gateway: topic[3]
+	};
+	
 	
 	console.log(objMessage);
 	
