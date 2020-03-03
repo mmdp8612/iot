@@ -2,7 +2,7 @@ var mqtt = require('mqtt');
 var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
 
-var Topic = 'test';
+var Topic = '#';
 var Broker_URL = 'tcp://66.97.36.17';
 var Database_URL = 'localhost';
 
@@ -94,18 +94,20 @@ function insert_message(topic, message, packet){
 	
 	console.log(objMessage);
 	
-	/*var url = "mongodb://localhost:27017/";
+	var url = "mongodb://localhost:27017/";
 
 	MongoClient.connect(url, function(err, db) {
+	  
 	  if (err) throw err;
+	  
 	  var dbo = db.db("mydb");
-	  var myobj = { name: "Company Inc", address: "Highway 37" };
-	  dbo.collection("customers").insertOne(myobj, function(err, res) {
+	  
+	  dbo.collection("iot_devices").insertOne(objMessage, function(err, res) {
 	    if (err) throw err;
-	    console.log("1 document inserted");
+	    console.log("Registro insertado con exito...");
 	    db.close();
 	  });
-	});*/
+	});
 
 }
 
