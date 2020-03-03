@@ -90,6 +90,8 @@ function insert_message(topic, message, packet){
 	
 	const objMessage = JSON.parse(String(message));
 	
+	objMessage.topic = topic;
+	
 	console.log(objMessage);
 	
 	/*var url = "mongodb://localhost:27017/";
