@@ -88,8 +88,9 @@ function countInstances(message_str){
 
 function insert_message(topic, message, packet){
 	
+	console.log(String(message));
 	
-	var url = "mongodb://localhost:27017/";
+	/*var url = "mongodb://localhost:27017/";
 
 	MongoClient.connect(url, function(err, db) {
 	  if (err) throw err;
@@ -100,7 +101,7 @@ function insert_message(topic, message, packet){
 	    console.log("1 document inserted");
 	    db.close();
 	  });
-	});
+	});*/
 
 }
 
