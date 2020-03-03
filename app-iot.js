@@ -102,72 +102,18 @@ function countInstances(message_str){
 
 function insert_message(topic, message, packet){
 	
-	var t = topic.split("/");
-	
-	var id_usuario = 15;
-	
-	
-	
-	var out = message.toString().replace(/-/gi, ">>").split("|");
-	
-	console.log(out);
+	var MongoClient = require('mongodb').MongoClient;
+	var url = "mongodb://localhost:27017/";
 
-	var id = [];
-
-	var id_dispositivo = 0;
-
-	var mensaje = '';
-
-	var version = null;
-
-	var tipo = null;
-
-	var firmware = null;
-
-	out.forEach((o, i) => {
-		
-		id = o.split(":");
-	  
-		if(id[0] == 'ID'){
-			
-			id_dispositivo = id[1];
-			
-		}else if(id[0] == 'M'){
-			
-			mensaje = id[1].toString();	
-			
-		}else if(id[0] == 'V'){
-			
-			version = id[1];
-			
-			var v = version.split(".");
-			
-			tipo = v[0];
-			
-			firmware = v[1] + "." + v[2];
-			
-		}
-	  
-	});
-	
-	var clientID = 'Canal01';
-	
-	var dispositivo = '001B44113AB7';
-	
-	var params = ['mensajes_iot', 'idUsuario', 'idDispositivo', 'tipoDispositivo', 'topic', 'mensaje', 'firmware', id_usuario, id_dispositivo,tipo,topic,mensaje,firmware];
-	
-	var sql = 'INSERT INTO ?? (??,??,??,??,??,??) VALUES (?,?,?,?,?,?)';
-	
-	sql = mysql.format(sql, params);
-	
-	connection.query(sql, function (err, results){
-		
-		//connection.release();
-		
-		if(err) throw err;
-		
-		console.log("1 registro insertado");
-
+	MongoClient.connect(url, function(err, db) {
+	  if (err) throw err;
+	  var dbo = db.db("mydb");
+	  var myobj = { name: "Company Inc", address: "Highway 37" };
+	  dbo.collection("customers").insertOne(myobj, function(err, res) {
+	    if (err) throw err;
+	    console.log("1 document inserted");
+	    db.close();
+	  });
 	});
 
 }
