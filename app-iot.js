@@ -1,7 +1,7 @@
 var mqtt = require('mqtt');
 var mysql = require('mysql');
 var express = require('express');
-var MongoClient = require('mongodb').MongoClient;
+//var MongoClient = require('mongodb').MongoClient;
 
 var Topic = 'test';
 var Broker_URL = 'tcp://66.97.36.17';
