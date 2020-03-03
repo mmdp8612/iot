@@ -1,7 +1,6 @@
 var mqtt = require('mqtt');
-var mysql = require('mysql');
 var express = require('express');
-//var MongoClient = require('mongodb').MongoClient;
+var MongoClient = require('mongodb').MongoClient;
 
 var Topic = 'test';
 var Broker_URL = 'tcp://66.97.36.17';
@@ -16,21 +15,6 @@ var options = {
 	password: 'Fm7G7MtV',
 	keepalive: 60
 };        
-
-var connection = mysql.createConnection({
-	
-	host: Database_URL,
-	user: 'root',
-	password: '123456',
-	database: 'iot'
-
-});
-
-connection.connect(function (err){
-
-	if(err) throw err;
-
-});
 
 var client = mqtt.connect(Broker_URL, options);
 
@@ -130,6 +114,6 @@ app.get('/publicar', function(req, res) {
 
 app.listen(8888, function(){
 	
-	console.log("Conectado al puerto 8000...");
+	console.log("Conectado al puerto 8888...");
 	
 });
