@@ -88,7 +88,9 @@ function countInstances(message_str){
 
 function insert_message(topic, message, packet){
 	
-	console.log(String(message));
+	const objMessage = JSON.parse(String(message));
+	
+	console.log(objMessage);
 	
 	/*var url = "mongodb://localhost:27017/";
 
