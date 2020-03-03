@@ -1,6 +1,8 @@
 var mqtt = require('mqtt');
 var mysql = require('mysql');
 var express = require('express');
+var MongoClient = require('mongodb').MongoClient;
+
 var Topic = 'test';
 var Broker_URL = 'tcp://66.97.36.17';
 var Database_URL = 'localhost';
@@ -102,7 +104,7 @@ function countInstances(message_str){
 
 function insert_message(topic, message, packet){
 	
-	var MongoClient = require('mongodb').MongoClient;
+	
 	var url = "mongodb://localhost:27017/";
 
 	MongoClient.connect(url, function(err, db) {
