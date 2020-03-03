@@ -111,11 +111,19 @@ function insert_message(topic, message, packet){
 
 }
 
-app.get('/publicar', function(req, res) {
+app.get('/data', function(req, res) {
   
-	client.publish(req.query.topic, req.query.message);
-	
-	res.send("Registro enviado...");
+	var url = "mongodb://localhost:27017/";
+
+	MongoClient.connect(url, function(err, db) {
+	  if (err) throw err;
+	  var dbo = db.db("mydb");
+	  dbo.collection("customers").toArray(function(err, result) {
+	    if (err) throw err;
+	    console.log(result);
+	    db.close();
+	  });
+	});
   
 });
 
