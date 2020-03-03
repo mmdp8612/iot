@@ -118,7 +118,7 @@ app.get('/data', function(req, res) {
 	MongoClient.connect(url, function(err, db) {
 	  if (err) throw err;
 	  var dbo = db.db("mydb");
-	  dbo.collection("customers").toArray(function(err, result) {
+	  dbo.collection("iot_devices").toArray(function(err, result) {
 	    if (err) throw err;
 	    console.log(result);
 	    db.close();
