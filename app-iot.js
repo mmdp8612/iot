@@ -121,6 +121,10 @@ app.get('/data', function(req, res) {
 	  dbo.collection("iot_devices").find().toArray(function(err, result) {
 	    if (err) throw err;
 	    console.log(result);
+		  
+	    res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(result));
+		  
 	    db.close();
 	  });
 	});
