@@ -119,6 +119,21 @@ function insert_message(topic, message, packet){
 
 }
 
+app.get('/drop', function (req, res){
+	var url = "mongodb://localhost:27017/";
+	
+	MongoClient.connect(url, function(err, db) {
+	  if (err) throw err;
+	  var dbo = db.db("mydb");
+	  dbo.collection("iot_devices").drop(function(err, delOK) {
+	    if (err) throw err;
+	    if (delOK) console.log("Mensajes Eliminados...");
+	    db.close();
+	  });
+	});
+	
+})
+
 app.get('/data', function(req, res) {
   
 	var url = "mongodb://localhost:27017/";
