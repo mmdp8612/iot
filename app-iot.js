@@ -1,3 +1,5 @@
+//version: 2.0
+
 var mqtt = require('mqtt');
 var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
