@@ -3,12 +3,15 @@
 var mqtt = require('mqtt');
 var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
+var morgan = require('morgan');
 
 var Topic = '#';
 var Broker_URL = 'tcp://66.97.36.17';
 var Database_URL = 'localhost';
 
 var app = express();
+
+app.use(morgan('dev'));
 
 var options = {
 	clientId: 'MyQTT',
