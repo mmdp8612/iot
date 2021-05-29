@@ -1,4 +1,4 @@
-//version: 3.0
+//version: 3.0.0
 
 var mqtt = require('mqtt');
 var express = require('express');
