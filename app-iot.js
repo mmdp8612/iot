@@ -6,8 +6,7 @@ var MongoClient = require('mongodb').MongoClient;
 var morgan = require('morgan');
 
 var Topic = '#';
-var Broker_URL = 'tcp://66.97.36.17';
-var Database_URL = 'localhost';
+var Broker_URL = 'tcp://66.97.42.143'; //'tcp://66.97.36.17';
 
 var app = express();
 
@@ -117,7 +116,5 @@ app.get('/transmision', function(req, res) {
 });
 
 app.listen(8888, function(){
-	
-	console.log("Conectado al puerto 8888...");
-	
+	console.log("Conectado al puerto 8888...");	
 });
