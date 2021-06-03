@@ -121,6 +121,7 @@ app.get('/drop', function (req, res){
 	});
 })
 
+//get messages
 app.get('/transmision', function(req, res) {
 	const url = "mongodb://localhost:27017/";
 	MongoClient.connect(url, function(err, db) {
