@@ -31,6 +31,8 @@ var options = {
 
 var client = mqtt.connect(Broker_URL, options);
 
+var MongoDB = new MongoClient(uri, {useUnifiedTopology: true});
+
 client.on('connect', mqtt_connect);
 client.on('reconnect', mqtt_reconnect);
 client.on('error', mqtt_error);
@@ -94,7 +96,7 @@ function insert_message(topic, message, packet){
         }
         
         var url = "mongodb://localhost:27017/";
-        MongoClient.connect(url, function(err, db) {
+        MongoDB.connect(url, function(err, db) {
         if (err) throw err;
         const dbo = db.db("mydb");
         dbo.collection("iot_devices").insertOne(objMessage, function(err, res) {
@@ -109,7 +111,7 @@ function insert_message(topic, message, packet){
 
 app.get('/drop', function (req, res){
 	const url = "mongodb://localhost:27017/";
-	MongoClient.connect(url, function(err, db) {
+	MongoDB.connect(url, function(err, db) {
 	  if (err) throw err;
 	  const dbo = db.db("mydb");
 	  dbo.dropCollection("customers", function(err, result) {
@@ -124,7 +126,7 @@ app.get('/drop', function (req, res){
 //get messages
 app.get('/transmision', function(req, res) {
 	const url = "mongodb://localhost:27017/";
-	MongoClient.connect(url, function(err, db) {
+	MongoDB.connect(url, function(err, db) {
 	  if (err) throw err;
 	  const dbo = db.db("mydb");
 	  dbo.collection("iot_devices").find().toArray(function(err, result) {
