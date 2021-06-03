@@ -75,17 +75,21 @@ function countInstances(message_str){
 
 function insert_message(topic, message, packet){
 	
-    console.log("insert message...");
-
 	const objMessage = JSON.parse(String(message));
 	const objTopic = String(topic).split("/");
 	
-	objMessage.topic = {
-		cmd: objTopic[0],
-		proveedor: objTopic[1],
-		cliente: objTopic[2],
-		gateway: objTopic[3]
-	};
+    if(typeof objMessage === 'object'){
+        objMessage.topic = {
+            cmd: objTopic[0],
+            proveedor: objTopic[1],
+            cliente: objTopic[2],
+            gateway: objTopic[3]
+        };
+    }else{
+        objMessage = {
+            message: String(message)
+        }
+    }
 	
 	var url = "mongodb://localhost:27017/";
 	MongoClient.connect(url, function(err, db) {
