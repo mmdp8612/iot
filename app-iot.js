@@ -114,7 +114,8 @@ app.get('/drop', function (req, res){
 	  const dbo = db.db("mydb");
 	  dbo.collection("iot_devices").drop(function(err, delOK) {
 	    if (err) throw err;
-	    if (delOK) console.log("Mensajes Eliminados...");
+	    res.setHeader('Content-Type', 'application/json');
+        res.end({success: true, message: "Mensajes eliminados!"});  
 	    db.close();
 	  });
 	});
