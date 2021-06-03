@@ -75,35 +75,36 @@ function countInstances(message_str){
 
 function insert_message(topic, message, packet){
 	
-    console.log(topic, String(message));
-
-/*
-	const objMessage = JSON.parse(String(message));
-	const objTopic = String(topic).split("/");
+    if(String(message) !== "hola"){
 	
-    if(typeof objMessage === 'object'){
-        objMessage.topic = {
-            cmd: objTopic[0],
-            proveedor: objTopic[1],
-            cliente: objTopic[2],
-            gateway: objTopic[3]
-        };
-    }else{
-        objMessage = {
-            message: String(message)
+        const objMessage = JSON.parse(String(message));
+        const objTopic = String(topic).split("/");
+        
+        if(typeof objMessage === 'object'){
+            objMessage.topic = {
+                cmd: objTopic[0],
+                proveedor: objTopic[1],
+                cliente: objTopic[2],
+                gateway: objTopic[3]
+            };
+        }else{
+            objMessage = {
+                message: String(message)
+            }
         }
+        
+        var url = "mongodb://localhost:27017/";
+        MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        const dbo = db.db("mydb");
+        dbo.collection("iot_devices").insertOne(objMessage, function(err, res) {
+            if (err) throw err;
+            console.log("Registro insertado con exito...");
+            db.close();
+        });
+        });
+
     }
-	
-	var url = "mongodb://localhost:27017/";
-	MongoClient.connect(url, function(err, db) {
-	  if (err) throw err;
-	  const dbo = db.db("mydb");
-	  dbo.collection("iot_devices").insertOne(objMessage, function(err, res) {
-	    if (err) throw err;
-	    console.log("Registro insertado con exito...");
-	    db.close();
-	  });
-	});*/
 }
 
 app.get('/drop', function (req, res){
