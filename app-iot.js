@@ -7,7 +7,7 @@ var MongoClient = require('mongodb').MongoClient;
 var morgan = require('morgan');
 
 var Topic = '#';
-var Broker_URL = 'vps-1951290-x.dattaweb.com'; //'tcp://66.97.36.17';
+var Broker_URL = 'mqtts://vps-1951290-x.dattaweb.com'; //'tcp://66.97.36.17';
 
 var app = express();
 
