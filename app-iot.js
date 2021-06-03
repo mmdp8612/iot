@@ -18,6 +18,7 @@ var certFile = fs.readFileSync("/etc/letsencrypt/live/vps-1951290-x.dattaweb.com
 var keyFile = fs.readFileSync("/etc/letsencrypt/live/vps-1951290-x.dattaweb.com/privkey.pem");
 
 var options = {
+    rejectUnauthorized: false,
 	clientId: 'MyQTT',
 	port: 8883,
 	username: 'points',
@@ -74,6 +75,8 @@ function countInstances(message_str){
 
 function insert_message(topic, message, packet){
 	
+    console.log("insert message...");
+
 	const objMessage = JSON.parse(String(message));
 	const objTopic = String(topic).split("/");
 	
