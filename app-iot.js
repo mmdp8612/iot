@@ -116,7 +116,7 @@ app.get('/drop', function (req, res){
 	    if (err) throw err;
 	    res.setHeader('Content-Type', 'application/json');
         res.json({success: true, message: "Mensajes eliminados!"});  
-	    db.close();
+	    db.close(); 
 	  });
 	});
 })
