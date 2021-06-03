@@ -1,5 +1,6 @@
 //version: 1.0.0
 
+var fs = require('fs');
 var mqtt = require('mqtt');
 var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
