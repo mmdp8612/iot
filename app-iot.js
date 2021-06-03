@@ -88,7 +88,7 @@ function insert_message(topic, message, packet){
 	};*/
 
     const objMessage = {
-        text_message: message
+        text_message: String(message)
     };
 	
 	var url = "mongodb://localhost:27017/";
