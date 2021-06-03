@@ -75,7 +75,7 @@ function countInstances(message_str){
 
 function insert_message(topic, message, packet){
 	
-    console.log(topic, message);
+    console.log(topic, String(message));
 
 /*
 	const objMessage = JSON.parse(String(message));
