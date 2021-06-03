@@ -112,10 +112,10 @@ app.get('/drop', function (req, res){
 	MongoClient.connect(url, function(err, db) {
 	  if (err) throw err;
 	  const dbo = db.db("mydb");
-	  dbo.collection("iot_devices").drop(function(err, delOK) {
+	  dbo.collection("iot_devices").drop(function(err, result) {
 	    if (err) throw err;
 	    res.setHeader('Content-Type', 'application/json');
-        res.json({success: true, message: "Mensajes eliminados!"});  
+        res.end(JSON.stringify(result));
 	    db.close(); 
 	  });
 	});
