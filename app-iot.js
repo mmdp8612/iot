@@ -6,18 +6,25 @@ var MongoClient = require('mongodb').MongoClient;
 var morgan = require('morgan');
 
 var Topic = '#';
-var Broker_URL = 'tcp://66.97.42.143'; //'tcp://66.97.36.17';
+var Broker_URL = 'vps-1951290-x.dattaweb.com'; //'tcp://66.97.36.17';
 
 var app = express();
 
 app.use(morgan('dev'));
+
+var caFile = fs.readFileSync("/etc/letsencrypt/live/vps-1951290-x.dattaweb.com/chain.pem");
+var certFile = fs.readFileSync("/etc/letsencrypt/live/vps-1951290-x.dattaweb.com/cert.pem");
+var keyFile = fs.readFileSync("/etc/letsencrypt/live/vps-1951290-x.dattaweb.com/privkey.pem");
 
 var options = {
 	clientId: 'MyQTT',
 	port: 8883,
 	username: 'points',
 	password: 'Fm7G7MtV',
-	keepalive: 60
+	keepalive: 60,
+    ca: [ caFile ],
+    cert: certFile,
+    key: keyFile
 };        
 
 var client = mqtt.connect(Broker_URL, options);
