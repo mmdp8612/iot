@@ -115,7 +115,7 @@ app.get('/drop', function (req, res){
 	  dbo.collection("iot_devices").drop(function(err, delOK) {
 	    if (err) throw err;
 	    res.setHeader('Content-Type', 'application/json');
-        res.end({success: true, message: "Mensajes eliminados!"});  
+        res.json({success: true, message: "Mensajes eliminados!"});  
 	    db.close();
 	  });
 	});
