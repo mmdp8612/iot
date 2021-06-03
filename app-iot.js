@@ -75,6 +75,9 @@ function countInstances(message_str){
 
 function insert_message(topic, message, packet){
 	
+    console.log(topic, message);
+
+/*
 	const objMessage = JSON.parse(String(message));
 	const objTopic = String(topic).split("/");
 	
@@ -100,7 +103,7 @@ function insert_message(topic, message, packet){
 	    console.log("Registro insertado con exito...");
 	    db.close();
 	  });
-	});
+	});*/
 }
 
 app.get('/drop', function (req, res){
