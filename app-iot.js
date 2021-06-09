@@ -13,6 +13,8 @@ var app = express();
 
 app.use(morgan('dev'));
 
+app.set('PORT', 8888);
+
 var caFile = fs.readFileSync("/etc/letsencrypt/live/vps-1951290-x.dattaweb.com/chain.pem");
 var certFile = fs.readFileSync("/etc/letsencrypt/live/vps-1951290-x.dattaweb.com/cert.pem");
 var keyFile = fs.readFileSync("/etc/letsencrypt/live/vps-1951290-x.dattaweb.com/privkey.pem");
@@ -33,8 +35,6 @@ var client = mqtt.connect(Broker_URL, options);
 
 var url = "mongodb://localhost:27017/";
 
-var MongoDB = new MongoClient;
-
 client.on('connect', mqtt_connect);
 client.on('reconnect', mqtt_reconnect);
 client.on('error', mqtt_error);
@@ -46,10 +46,8 @@ function mqtt_connect(){
 }
 
 function mqtt_suscribe(err, granted){
-
 	console.log('Subscripto a ' + Topic);
 	if(err){ console.log(err); }
-
 }
 
 function mqtt_reconnect(err){
@@ -78,26 +76,24 @@ function countInstances(message_str){
 }
 
 function insert_message(topic, message, packet){
-	
-    if(String(message) !== "hola"){
-	
-        const objMessage = JSON.parse(String(message));
-        const objTopic = String(topic).split("/");
-        
-        if(typeof objMessage === 'object'){
-            objMessage.topic = {
-                cmd: objTopic[0],
-                proveedor: objTopic[1],
-                cliente: objTopic[2],
-                gateway: objTopic[3]
-            };
-        }else{
-            objMessage = {
-                message: String(message)
-            }
-        }
+
+    const objMessage = JSON.parse(String(message));
+    const objTopic = String(topic).split("/");
     
-        MongoDB.connect(url, function(err, db) {
+    if(typeof objMessage === 'object'){
+        objMessage.topic = {
+            cmd: objTopic[0],
+            proveedor: objTopic[1],
+            cliente: objTopic[2],
+            gateway: objTopic[3]
+        };
+    }else{
+        objMessage = {
+            message: String(message)
+        }
+    }
+
+    MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         const dbo = db.db("mydb");
         dbo.collection("iot_devices").insertOne(objMessage, function(err, res) {
@@ -105,13 +101,11 @@ function insert_message(topic, message, packet){
             console.log("Registro insertado con exito...");
             db.close();
         });
-        });
-
-    }
+    });
 }
 
 app.get('/drop', function (req, res){
-	MongoDB.connect(url, function (err, db) {
+	MongoClient.connect(url, function (err, db) {
 	  if (err) throw err;
 	  const dbo = db.db("mydb");
 	  dbo.dropCollection("iot_devices", function(err, result) {
@@ -121,11 +115,10 @@ app.get('/drop', function (req, res){
         db.close();
       });
 	});
-})
+});
 
-//get messages
 app.get('/transmision', function(req, res) {
-	MongoDB.connect(url, function(err, db) {
+	MongoClient.connect(url, function(err, db) {
 	  if (err) throw err;
 	  const dbo = db.db("mydb");
 	  dbo.collection("iot_devices").find().toArray(function(err, result) {
@@ -137,6 +130,6 @@ app.get('/transmision', function(req, res) {
 	});
 });
 
-app.listen(8888, function(){
-	console.log("Conectado al puerto 8888...");	
+app.listen(app.get('PORT'), function(){
+	console.log(`Connected in port ${app.get('PORT')}...`);	
 });
