@@ -51,9 +51,15 @@ function mqtt_reconnect(err){
 	client = mqtt.connect(Broker_URL, options);
 }
 
+function mqtt_error(err){}
+
+function after_publish(){}
+
 function mqtt_messageReceived(topic, message, packet){
 	insert_message(topic, message, packet);
 }
+
+function mqtt_close(){}
 
 function insert_message(topic, message, packet){
     console.log(String(message));
