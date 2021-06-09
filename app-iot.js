@@ -3,6 +3,7 @@
 var fs = require('fs');
 var mqtt = require('mqtt');
 var express = require('express');
+var mysql = require('mysql');
 var MongoClient = require('mongodb').MongoClient;
 var morgan = require('morgan');
 
@@ -14,6 +15,15 @@ var app = express();
 app.use(morgan('dev'));
 
 app.set('PORT', 8888);
+
+var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'root',
+    database: 'iot'
+});
+
+connection.connect();
 
 var caFile = fs.readFileSync("/etc/letsencrypt/live/vps-1951290-x.dattaweb.com/chain.pem");
 var certFile = fs.readFileSync("/etc/letsencrypt/live/vps-1951290-x.dattaweb.com/cert.pem");
