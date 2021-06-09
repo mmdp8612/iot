@@ -110,7 +110,10 @@ function insert_message(topic, message, packet){
         const dbo = db.db("mydb");
         dbo.collection("iot_devices").insertOne(objMessage, function(err, res) {
             if (err) throw err;
-            console.log("Registro insertado con exito...");
+            connection.query("SELECT * FROM devices WHERE topic = ?", [String(topic)], function (error, results, fields){
+                if(error) throw error;
+                console.log(results);
+            });
             db.close();
         });
     });
