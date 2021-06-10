@@ -148,7 +148,20 @@ app.get('/transmision', function(req, res) {
 	  dbo.collection("iot_messages").find().toArray(function(err, result) {
 	    if (err) throw err;
 	    res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify(result));  
+        res.end(JSON.stringify(result));  
+	    db.close();
+	  });
+	});
+});
+
+app.get('/transmision/:id_device', function(req, res) {
+	MongoClient.connect(url, function(err, db) {
+	  if (err) throw err;
+	  const dbo = db.db("db_iot");
+	  dbo.collection("iot_messages").find({IdDevice: req.params.id_device}).toArray(function(err, result) {
+	    if (err) throw err;
+	    res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(result));  
 	    db.close();
 	  });
 	});
