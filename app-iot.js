@@ -103,10 +103,12 @@ function insert_message(topic, message, packet){
         });
 
         const query = { 
-            idDevide: objMessage.IdDevice, 
-            topic: String(topic)  
+            $and: [
+                { idDevide: objMessage.IdDevice },
+                { topic: String(topic) }
+            ]
         }
-        
+
         const device = {
             alias: "Device Test",
             topic: String(topic),
