@@ -3,7 +3,6 @@
 var fs = require('fs');
 var mqtt = require('mqtt');
 var express = require('express');
-var mysql = require('mysql');
 var MongoClient = require('mongodb').MongoClient;
 var morgan = require('morgan');
 
@@ -15,15 +14,6 @@ var app = express();
 app.use(morgan('dev'));
 
 app.set('PORT', 8888);
-
-var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'iot'
-});
-
-connection.connect();
 
 var caFile = fs.readFileSync("/etc/letsencrypt/live/vps-1951290-x.dattaweb.com/chain.pem");
 var certFile = fs.readFileSync("/etc/letsencrypt/live/vps-1951290-x.dattaweb.com/cert.pem");
@@ -107,13 +97,16 @@ function insert_message(topic, message, packet){
 
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
-        const dbo = db.db("mydb");
-        dbo.collection("iot_devices").insertOne(objMessage, function(err, res) {
+        const dbo = db.db("db_iot");
+        dbo.collection("iot_messages").insertOne(objMessage, function(err, res) {
             if (err) throw err;
-            /*connection.query("SELECT * FROM devices WHERE topic = ?", [String(topic)], function (error, results, fields){
-                if(error) throw error;
-                console.log(results);
-            });*/
+            db.collection("iot_devices").find(query).toArray(function (err, result){
+                if(err) throw err;
+                if(result.length === 0){
+                    console.log("Crea dispositivo nuevo...");
+                }
+                db.close();
+            });
             db.close();
         });
     });
@@ -122,8 +115,8 @@ function insert_message(topic, message, packet){
 app.get('/drop', function (req, res){
 	MongoClient.connect(url, function (err, db) {
 	  if (err) throw err;
-	  const dbo = db.db("mydb");
-	  dbo.dropCollection("iot_devices", function(err, result) {
+	  const dbo = db.db("db_iot");
+	  dbo.dropCollection("iot_messages", function(err, result) {
         if (err) throw err;
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(result));  
@@ -135,8 +128,8 @@ app.get('/drop', function (req, res){
 app.get('/transmision', function(req, res) {
 	MongoClient.connect(url, function(err, db) {
 	  if (err) throw err;
-	  const dbo = db.db("mydb");
-	  dbo.collection("iot_devices").find().toArray(function(err, result) {
+	  const dbo = db.db("db_iot");
+	  dbo.collection("iot_messages").find().toArray(function(err, result) {
 	    if (err) throw err;
 	    res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(result));  
@@ -148,3 +141,5 @@ app.get('/transmision', function(req, res) {
 app.listen(app.get('PORT'), function(){
 	console.log(`Connected in port ${app.get('PORT')}...`);	
 });
+
+
