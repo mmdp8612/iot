@@ -103,22 +103,14 @@ function insert_message(topic, message, packet){
         });
 
         const query = { topic: String(topic)  }
-        dbo.collection("iot_devices").find(query).toArray(function (err, result){
-            if(err) throw err;
-            if(result.length === 0){
-                const device = {
-                    alias: "Device Test",
-                    topic: String(topic),
-                    type: objMessage.DeviceClass,
-                    idDevice: objMessage.IdDevice
-                };
-                dbo.collection("iot_devices").insertOne(device, function(err, res) {
-                    if (err) throw err;
-                    console.log("Dispositivo creado con exito...");
-                });
-            }
-        });
+        const device = {
+            alias: "Device Test",
+            topic: String(topic),
+            type: objMessage.DeviceClass,
+            idDevice: objMessage.IdDevice
+        };
 
+        dbo.collection("iot_devices").update(query, device, {upsert: true});
         db.close();
     });
 }
