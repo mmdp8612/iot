@@ -100,13 +100,15 @@ function insert_message(topic, message, packet){
         const dbo = db.db("db_iot");
         dbo.collection("iot_messages").insertOne(objMessage, function(err, res) {
             if (err) throw err;
-            db.collection("iot_devices").find(query).toArray(function (err, result){
-                if(err) throw err;
-                if(result.length === 0){
-                    console.log("Crea dispositivo nuevo...");
-                }
-                db.close();
-            });
+            db.close();
+        });
+
+        const query = { topic: String(topic)  }
+        db.collection("iot_devices").find(query).toArray(function (err, result){
+            if(err) throw err;
+            if(result.length === 0){
+                console.log("Crea dispositivo nuevo...");
+            }
             db.close();
         });
     });
