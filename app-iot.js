@@ -106,7 +106,16 @@ function insert_message(topic, message, packet){
         dbo.collection("iot_devices").find(query).toArray(function (err, result){
             if(err) throw err;
             if(result.length === 0){
-                console.log("Crea dispositivo nuevo...");
+                const device = {
+                    alias: "Device Test",
+                    topic: String(topic),
+                    type: objMessage.DeviceClass,
+                    idDevice: objMessage.IdDevice
+                };
+                dbo.collection("iot_devices").insertOne(device, function(err, res) {
+                    if (err) throw err;
+                    console.log("Dispositivo creado con exito...");
+                });
             }
         });
 
