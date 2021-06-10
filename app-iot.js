@@ -102,7 +102,11 @@ function insert_message(topic, message, packet){
             if (err) throw err;
         });
 
-        const query = { topic: String(topic)  }
+        const query = { 
+            idDevide: objMessage.IdDevice, 
+            topic: String(topic)  
+        }
+        
         const device = {
             alias: "Device Test",
             topic: String(topic),
