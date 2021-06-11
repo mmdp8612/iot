@@ -103,12 +103,10 @@ function insert_message(topic, message, packet){
         });
 
         const query = { 
-            $and: [
-                { idDevide: objMessage.IdDevice },
-                { topic: String(topic) }
-            ]
-        }
-
+            idDevice: objMessage.IdDevice, 
+            topic: String(topic) 
+        };
+            
         const device = {
             alias: "Device Test",
             topic: String(topic),
@@ -116,21 +114,22 @@ function insert_message(topic, message, packet){
             idDevice: objMessage.IdDevice
         };
 
-        dbo.collection("iot_devices").update(query, device, {upsert: true});
+        dbo.collection("iot_devices").findAndModify(query, device, {upsert: true});
         db.close();
     });
 }
 
 app.get('/drop', function (req, res){
 	MongoClient.connect(url, function (err, db) {
-	  if (err) throw err;
-	  const dbo = db.db("db_iot");
-	  dbo.dropCollection("iot_messages", function(err, result) {
-        if (err) throw err;
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(result));  
+	    if (err) throw err;
+	    const dbo = db.db("db_iot");
+	    dbo.dropCollection("iot_messages", function(err, result) {
+            if (err) throw err;
+        });
+        dbo.dropCollection("iot_devices", function(err, result) {
+            if (err) throw err;
+        });
         db.close();
-      });
 	});
 });
 
