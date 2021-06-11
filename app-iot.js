@@ -114,7 +114,7 @@ function insert_message(topic, message, packet){
             idDevice: objMessage.IdDevice
         };
 
-        dbo.collection("iot_devices").findAndModify(query, device, {upsert: true});
+        dbo.collection("iot_devices").update(query, device, {upsert: true});
         db.close();
     });
 }
