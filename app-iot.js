@@ -148,7 +148,7 @@ app.get('/:id_cliente/devices', function(req, res) {
 	});
 });
 
-app.get('/transmision/:id_device', function(req, res) {
+app.get('/:id_device/transmision', function(req, res) {
     MongoClient.connect(url, function(err, db) {
 	  if (err) throw err;
 	  const dbo = db.db("db_iot");
