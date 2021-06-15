@@ -149,6 +149,7 @@ app.get('/:id_cliente/devices', function(req, res) {
 });
 
 app.get('/transmision/:id_device', function(req, res) {
+    console.log("id_device:", req.params.id_device);
 	MongoClient.connect(url, function(err, db) {
 	  if (err) throw err;
 	  const dbo = db.db("db_iot");
@@ -161,7 +162,7 @@ app.get('/transmision/:id_device', function(req, res) {
 	});
 });
 
-app.get('/transmision', function(req, res) {
+/*app.get('/transmision', function(req, res) {
 	MongoClient.connect(url, function(err, db) {
 	  if (err) throw err;
 	  const dbo = db.db("db_iot");
@@ -172,7 +173,7 @@ app.get('/transmision', function(req, res) {
 	    db.close();
 	  });
 	});
-});
+});*/
 
 app.listen(app.get('PORT'), function(){
 	console.log(`Connected in port ${app.get('PORT')}...`);	
