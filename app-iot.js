@@ -82,6 +82,8 @@ function insert_message(topic, message, packet){
     const objMessage = JSON.parse(String(message));
     const objTopic = String(topic).split("/");
     
+    const idCliente = objTopic[2];
+
     if(typeof objMessage === 'object'){
         objMessage.topic = {
             cmd: objTopic[0],
@@ -111,7 +113,8 @@ function insert_message(topic, message, packet){
             alias: "Device Test",
             topic: String(topic),
             type: objMessage.DeviceClass,
-            idDevice: objMessage.IdDevice
+            idDevice: objMessage.IdDevice,
+            idCliente: idCliente
         };
 
         dbo.collection("iot_devices").update(query, device, {upsert: true});
@@ -133,11 +136,11 @@ app.get('/drop', function (req, res){
 	});
 });
 
-app.get('/devices', function(req, res) {
+app.get('/:id_cliente/devices', function(req, res) {
 	MongoClient.connect(url, function(err, db) {
 	  if (err) throw err;
 	  const dbo = db.db("db_iot");
-	  dbo.collection("iot_devices").find().toArray(function(err, result) {
+	  dbo.collection("iot_devices").find({idCliente:req.params.id_cliente}).toArray(function(err, result) {
 	    if (err) throw err;
 	    res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(result));  
