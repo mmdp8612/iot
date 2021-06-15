@@ -82,14 +82,13 @@ function insert_message(topic, message, packet){
     const objMessage = JSON.parse(String(message));
     const objTopic = String(topic).split("/");
     
-    const idCliente = objTopic[2];
+    const idCliente = objTopic[1];
 
     if(typeof objMessage === 'object'){
         objMessage.topic = {
-            cmd: objTopic[0],
-            proveedor: objTopic[1],
-            cliente: objTopic[2],
-            gateway: objTopic[3]
+            proveedor: objTopic[0],
+            cliente: objTopic[1],
+            firmware: objTopic[2]
         };
     }else{
         objMessage = {
@@ -112,8 +111,8 @@ function insert_message(topic, message, packet){
         const device = {
             alias: "Device Test",
             topic: String(topic),
-            type: objMessage.DeviceClass,
-            idDevice: objMessage.IdDevice,
+            type: objMessage.typeDevice,
+            idDevice: objMessage.idDevice,
             idCliente: idCliente
         };
 
