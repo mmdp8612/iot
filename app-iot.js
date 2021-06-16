@@ -139,7 +139,7 @@ app.get('/:id_cliente/devices', function(req, res) {
 	MongoClient.connect(url, function(err, db) {
 	  if (err) throw err;
 	  const dbo = db.db("db_iot");
-	  dbo.collection("iot_devices").find({idCliente:req.params.id_cliente}).toArray(function(err, result) {
+	  dbo.collection("iot_devices").find({idCliente:req.params.id_cliente}).sort({_id:-1}).toArray(function(err, result) {
 	    if (err) throw err;
 	    res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(result));  
@@ -152,7 +152,7 @@ app.get('/:id_device/transmision', function(req, res) {
     MongoClient.connect(url, function(err, db) {
 	  if (err) throw err;
 	  const dbo = db.db("db_iot");
-	  dbo.collection("iot_messages").find({idDevice:Number(req.params.id_device)}).toArray(function(err, result) {
+	  dbo.collection("iot_messages").find({idDevice:Number(req.params.id_device)}).sort({_id:-1}).toArray(function(err, result) {
 	    if (err) throw err;
 	    res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(result));  
