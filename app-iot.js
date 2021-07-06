@@ -148,6 +148,19 @@ app.get('/:id_cliente/devices', function(req, res) {
 	});
 });
 
+app.put('/:id_device/device', function(req, res) {
+	MongoClient.connect(url, function(err, db) {
+	  if (err) throw err;
+	  const dbo = db.db("db_iot");
+	  dbo.collection("iot_devices").updateOne({_id:req.params.id_device}, {alias:req.body.alias}, function(err, result) {
+	    if (err) throw err;
+	    res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(result));  
+	    db.close();
+	  });
+	});
+});
+
 app.get('/:id_device/transmision', function(req, res) {
     MongoClient.connect(url, function(err, db) {
 	  if (err) throw err;
