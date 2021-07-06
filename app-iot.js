@@ -7,6 +7,8 @@ var MongoClient = require('mongodb').MongoClient;
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 
+var ObjectID = require('mongodb').ObjectID;
+
 var Topic = '#';
 var Broker_URL = 'mqtts://vps-1951290-x.dattaweb.com'; //'tcp://66.97.36.17';
 
@@ -152,27 +154,27 @@ app.get('/:id_cliente/devices', function(req, res) {
 
 app.put('/:id_device/device', function(req, res) {
     MongoClient.connect(url, function(err, db) {
-	  if (err) throw err;
-	  const dbo = db.db("db_iot");
-	  dbo.collection("iot_devices").updateOne({_id:req.params.id_device}, {$set: {alias:req.body.alias}}, function(err, result) {
 	    if (err) throw err;
-	    res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(result));  
-	    db.close();
-	  });
+	    const dbo = db.db("db_iot");
+	    dbo.collection("iot_devices").updateOne({_id:ObjectID(req.params.id_device)}, {$set: {alias:req.body.alias}}, function(err, result) {
+	        if (err) throw err;
+	        res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(result));  
+	        db.close();
+	    });
 	});
 });
 
 app.get('/:id_device/transmision', function(req, res) {
     MongoClient.connect(url, function(err, db) {
-	  if (err) throw err;
-	  const dbo = db.db("db_iot");
-	  dbo.collection("iot_messages").find({idDevice:Number(req.params.id_device)}).sort({_id:-1}).toArray(function(err, result) {
 	    if (err) throw err;
-	    res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(result));  
-	    db.close();
-	  });
+	    const dbo = db.db("db_iot");
+	    dbo.collection("iot_messages").find({idDevice:Number(req.params.id_device)}).sort({_id:-1}).toArray(function(err, result) {
+	        if (err) throw err;
+	        res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(result));  
+	        db.close();
+	    });
 	});
 });
 
