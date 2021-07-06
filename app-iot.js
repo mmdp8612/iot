@@ -5,12 +5,14 @@ var mqtt = require('mqtt');
 var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
 var morgan = require('morgan');
+var bodyParser = require('body-parser');
 
 var Topic = '#';
 var Broker_URL = 'mqtts://vps-1951290-x.dattaweb.com'; //'tcp://66.97.36.17';
 
 var app = express();
 
+app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 app.set('PORT', 8888);
