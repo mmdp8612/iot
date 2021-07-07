@@ -6,6 +6,7 @@ var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var ObjectID = require('mongodb').ObjectID;
 
@@ -16,6 +17,7 @@ var app = express();
 
 app.use(bodyParser.json());
 app.use(morgan('dev'));
+app.use(cors());
 
 app.set('PORT', 8888);
 
