@@ -127,6 +127,20 @@ function insert_message(topic, message, packet){
     });
 }
 
+app.delete('/:id_device/device', function (req, res){
+	MongoClient.connect(url, function (err, db) {
+	    if (err) throw err;
+	    const dbo = db.db("db_iot");
+	    dbo.collection("iot_devices").deleteOne({_id:req.params.id_device}, function(err, result) {
+            if (err) throw err;
+	        res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(result));  
+	        db.close();
+        });
+        db.close();
+	});
+});
+
 app.get('/drop', function (req, res){
 	MongoClient.connect(url, function (err, db) {
 	    if (err) throw err;
